@@ -5,12 +5,14 @@ import numpy as np
 
 from prime_generator import calculate_sieve, get_primes
 
+blocks, block_size = 256, 64
 start = max(map(lambda path: int(path.split('-')[1].split('.')[0]), glob('data/*.txt')))
 offset = 1000000000
 
 print('Loading primes...')
 loading_primes_time = time()
-small_primes = np.delete(np.loadtxt('data/0-1000000000.txt', delimiter='\n', dtype=np.int32), 0)
+with open('data/0-1000000000.txt', 'r') as file:
+    small_primes = np.array(list(map(int, file.readlines()[1:])))
 print('INIT VALUES:', time() - loading_primes_time, end='\n\n')
 
 for calc_round in range(1, 101):
@@ -21,7 +23,7 @@ for calc_round in range(1, 101):
     start_time = time()
     part_time = start_time
 
-    calculate_sieve[256, 64](start, offset, sieve, small_primes)
+    calculate_sieve[blocks, block_size](start, offset, sieve, small_primes)
     print('CALC PRIMES:', time() - part_time)
 
     part_time = time()
