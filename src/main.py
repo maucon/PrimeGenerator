@@ -9,10 +9,11 @@ from prime_generator import calculate_sieve, get_primes
 loading_primes_time = time()
 blocks, block_size = 256, 64
 offset = 1000000000
+step_size = 10000
 print('Calculating start point...')
 start = max(map(lambda path: int(path.split('-')[1].split('.')[0]), glob('../data/*.*prime')))
 print('Loading primes...')
-small_primes = read_compressed_prime_file('../data/0-1000000000', offset)[1:]
+small_primes = read_compressed_prime_file('../data/0-1000000000', step_size)[1:]
 print('INIT VALUES:', time() - loading_primes_time, end='\n\n')
 
 for calc_round in range(1, 101):
