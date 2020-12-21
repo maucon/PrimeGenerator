@@ -1,4 +1,5 @@
 from time import time
+from glob import glob
 
 from numba import cuda, njit
 import numpy as np
@@ -28,7 +29,7 @@ def get_primes(offset, sieve):
     return primes
 
 
-start = 41000000000  # todo automate
+start = max(map(lambda path: int(path.split('-')[1].split('.')[0]), glob('data/*.txt')))
 offset = 1000000000
 
 print('Loading primes...')
